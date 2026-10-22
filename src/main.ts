@@ -1,11 +1,29 @@
 const portrait = document.querySelector<HTMLDivElement>("#portrait")!;
 const spin = document.querySelector<HTMLButtonElement>("#spin")!;
+// https://www.istockphoto.com/photos/some-park iStock - Royalty free
+import park from "./assets/park.jpg?no-inline";
+// https://www.vecteezy.com/free-png/pirate-eye-patch Vecteezy - Royalty free
+import eyepatch from "./assets/eyepatch.webp?no-inline";
 
 // The prototype grew inline. Keep it this way until the refactoring checkpoint.
 const face = document.createElementNS("http://www.w3.org/2000/svg", "svg");
 face.setAttribute("viewBox", "0 0 200 200");
 face.setAttribute("role", "img");
-face.setAttribute("aria-label", "A neutral face");
+face.setAttribute(
+  "aria-label",
+  "A face with an eyepatch and a park background",
+);
+
+const parkImage = document.createElementNS(
+  "http://www.w3.org/2000/svg",
+  "image",
+);
+parkImage.setAttribute("href", park);
+parkImage.setAttribute("x", "0");
+parkImage.setAttribute("y", "-50");
+parkImage.setAttribute("width", "300");
+parkImage.setAttribute("height", "300");
+face.append(parkImage);
 
 const head = document.createElementNS("http://www.w3.org/2000/svg", "ellipse");
 head.setAttribute("cx", "100");
@@ -58,6 +76,17 @@ mouth.setAttribute("stroke", "#302c29");
 mouth.setAttribute("stroke-width", "4");
 mouth.setAttribute("stroke-linecap", "round");
 face.append(mouth);
+
+const eyepatchImage = document.createElementNS(
+  "http://www.w3.org/2000/svg",
+  "image",
+);
+eyepatchImage.setAttribute("href", eyepatch);
+eyepatchImage.setAttribute("x", "10");
+eyepatchImage.setAttribute("y", "0");
+eyepatchImage.setAttribute("width", "120");
+eyepatchImage.setAttribute("height", "120");
+face.append(eyepatchImage);
 
 portrait.append(face);
 
