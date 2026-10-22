@@ -2,10 +2,13 @@ const portrait = document.querySelector<HTMLDivElement>("#portrait")!;
 const spin = document.querySelector<HTMLButtonElement>("#spin")!;
 
 // The prototype grew inline. Keep it this way until the refactoring checkpoint.
-const face = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+const face = document.createElementNS(
+  "http://www.w3.org/2000/svg",
+  "svg",
+);
 face.setAttribute("viewBox", "0 0 200 200");
 face.setAttribute("role", "img");
-face.setAttribute("aria-label", "A neutral face");
+face.setAttribute("aria-label", "A face with a cap");
 
 const head = document.createElementNS("http://www.w3.org/2000/svg", "ellipse");
 head.setAttribute("cx", "100");
@@ -59,7 +62,30 @@ mouth.setAttribute("stroke-width", "4");
 mouth.setAttribute("stroke-linecap", "round");
 face.append(mouth);
 
+// Top of cap
+for (let i = 0; i < 60; i++) {
+  const angle = (i / 60) * Math.PI;
+  const dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+  dot.setAttribute("cx", String(100 + 86 * Math.cos(-angle)));
+  dot.setAttribute("cy", String(70 + 65 * Math.sin(-angle)));
+  dot.setAttribute("r", "3");
+  dot.setAttribute("fill", "#563b67");
+  face.append(dot);
+}
+
+// Bottom of cap
+for (let i = 0; i < 40; i++) {
+  const dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+  dot.setAttribute("cx", String(15 + i * 5));
+  dot.setAttribute("cy", String(70));
+  dot.setAttribute("r", "3");
+  dot.setAttribute("fill", "#563b67");
+  face.append(dot);
+}
+
 portrait.append(face);
+
+console.log(document.querySelectorAll("#portrait svg circle").length);
 
 spin.addEventListener("click", () => {
   // Restart rather than accumulate simultaneous animations on repeated clicks.
